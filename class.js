@@ -1,9 +1,9 @@
-
-class Grass {
-    constructor(x, y) {
-        this.multyply = 0
+class LivingCreature {
+    constructor(x, y, index) {
         this.x = x;
         this.y = y;
+        this.multiply = 0;
+        this.index = index;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -14,50 +14,42 @@ class Grass {
             [this.x, this.y + 1],
             [this.x + 1, this.y + 1]
         ];
-    }
 
-    chooseCell(character) {
+    }
+    chooseCell(ch) {
         var found = [];
         for (var i in this.directions) {
             var x = this.directions[i][0];
             var y = this.directions[i][1];
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-
-                if (matrix[y][x] == character) {
+                if (matrix[y][x] == ch) {
                     found.push(this.directions[i]);
                 }
             }
         }
         return found;
-
     }
+}
+class Grass extends LivingCreature {
 
     mul() {
-        let azatcordinatner = this.chooseCell(0)
-        let newcell = random(azatcordinatner);
-
-
-        if (newcell && this.multyply > 1) {
-            let x = newcell[0]
-            let y = newcell[1]
-            matrix[y][x] = 1
-            grassArr.push(new Grass(x, y))
-            this.multyply = 0
+        this.multiply++;
+        var newCell = random(this.chooseCell(0));
+        if(this.multiply > 1 && newCell) {
+            var newGrass = new Grass(newCell[0],newCell[1]);
+            grassArr.push(newGrass);
+            matrix[newCell[1]][newCell[0]] = 1
+            this.multiply = 0;
         }
-
-        this.multyply++
     }
 }
 
 
 
-class GrassEater {
+class GrassEater extends LivingCreature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
+        super(x, y, index);
         this.energy = 15;
-        this.index = index;
-        this.directions = [];
     }
     getNewCoordinates() {
         this.directions = [
@@ -72,20 +64,10 @@ class GrassEater {
         ];
     }
     chooseCell(character) {
-        this.getNewCoordinates()
-        const found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
-
+        this.getNewCoordinates();
+        return super.chooseCell(character);
     }
+
     eat() {
         let newcell = random(this.chooseCell(1));
         let newcell1 = random(this.chooseCell(4))
@@ -127,7 +109,7 @@ class GrassEater {
             }
             this.die()
         }
-        else if(newcell3){
+        else if (newcell3) {
             this.fight()
         }
 
@@ -171,11 +153,11 @@ class GrassEater {
             }
         }
     }
-    fight(){
+    fight() {
         let azatcordinatner = this.chooseCell(3)
         let newcell = random(azatcordinatner);
         let chance = Math.round(Math.random())
-        if(chance == 1){
+        if (chance == 1) {
             let x1 = newcell[0]
             let y1 = newcell[1]
             matrix[this.y][this.x] = 0
@@ -189,7 +171,7 @@ class GrassEater {
                 }
             }
         }
-        else if(chance == 0){
+        else if (chance == 0) {
             this.die()
         }
     }
@@ -198,66 +180,27 @@ class GrassEater {
 
 
 
-class PoisonGrass {
-    constructor(x, y) {
-        this.multyply = 0
-        this.x = x;
-        this.y = y;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
-
-    chooseCell(character) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
-
-    }
+class PoisonGrass extends LivingCreature {
 
     mul() {
-        let azatcordinatner = this.chooseCell(0)
-        let newcell = random(azatcordinatner);
-
-
-        if (newcell && this.multyply > 1) {
-            let x = newcell[0]
-            let y = newcell[1]
-            matrix[y][x] = 4
-            poisongrassArr.push(new PoisonGrass(x, y))
-            this.multyply = 0
+        this.multiply++;
+        var newCell = random(this.chooseCell(0));
+        if(this.multiply > 1 && newCell) {
+            var newPoisonGrass = new PoisonGrass(newCell[0],newCell[1]);
+            poisongrassArr.push(newPoisonGrass);
+            matrix[newCell[1]][newCell[0]] = 4
+            this.multiply = 0;
         }
-
-        this.multyply++
     }
 }
 
 
 
 
-class PoisonEater {
+class PoisonEater extends LivingCreature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
+        super(x, y, index);
         this.energy = 15;
-        this.index = index;
-        this.directions = [];
     }
     getNewCoordinates() {
         this.directions = [
@@ -272,20 +215,10 @@ class PoisonEater {
         ];
     }
     chooseCell(character) {
-        this.getNewCoordinates()
-        const found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
-
+        this.getNewCoordinates();
+        return super.chooseCell(character);
     }
+
     eat() {
         let newcell = random(this.chooseCell(1));
         let newcell1 = random(this.chooseCell(4))
@@ -327,7 +260,7 @@ class PoisonEater {
             }
             this.die()
         }
-        else if(newcell3){
+        else if (newcell3) {
             this.fight()
         }
 
@@ -372,11 +305,11 @@ class PoisonEater {
             }
         }
     }
-    fight(){
+    fight() {
         let azatcordinatner = this.chooseCell(3)
         let newcell = random(azatcordinatner);
         let chance = Math.round(Math.random())
-        if(chance == 1){
+        if (chance == 1) {
             let x1 = newcell[0]
             let y1 = newcell[1]
             matrix[this.y][this.x] = 0
@@ -390,7 +323,7 @@ class PoisonEater {
                 }
             }
         }
-        else if(chance == 0){
+        else if (chance == 0) {
             this.die()
         }
     }
