@@ -49,7 +49,7 @@ class Grass extends LivingCreature {
 class GrassEater extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
-        this.energy = 15;
+        this.energy = 18;
     }
     getNewCoordinates() {
         this.directions = [
@@ -200,7 +200,7 @@ class PoisonGrass extends LivingCreature {
 class PoisonEater extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
-        this.energy = 15;
+        this.energy = 18;
     }
     getNewCoordinates() {
         this.directions = [
