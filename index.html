@@ -1,9 +1,37 @@
-<html>
-   <head>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-       <script src="class.js"></script>
-	  <script src="script.js"></script>
-   </head>
-   <body>
-   </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Document</title>
+</head>
+
+<body>
+   <div class="tools" style="display: flex" >
+      <h1 style="color:yellowgreen; margin-top: 77px">Events</h1>
+      <ul>
+         <li style="margin-bottom: 15px">
+            <button onclick="kill()">Kill them all</button>
+         </li>
+         <li style="margin-bottom: 15px">
+            <button onclick="addGrass()">Add grass</button>
+         </li>
+         <li style="margin-bottom: 15px">
+            <button onclick="addGrassEater()">Add grass eater</button>
+         </li>
+         <li style="margin-bottom: 15px">
+            <button onclick="addPoisonGrass()">Add poison grass</button>
+         </li>
+         <li style="margin-bottom: 15px">
+            <button onclick="addPoisonEater()">Add poison eater</button>
+         </li>
+      </ul>
+   </div>
+   <script src="socket.io/socket.io.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
+   <script src="client.js"></script>
+</body>
+
 </html>
